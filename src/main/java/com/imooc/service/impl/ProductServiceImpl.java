@@ -2,11 +2,14 @@ package com.imooc.service.impl;
 
 import com.imooc.dataobject.ProductInfo;
 import com.imooc.dto.CartDTO;
+import com.imooc.dto.ProductDTO;
 import com.imooc.enums.ResultEnum;
 import com.imooc.exception.SellException;
 import com.imooc.repository.ProductInfoRepository;
 import com.imooc.service.ProductService;
 import com.imooc.enums.ProductStatusEnum;
+import com.imooc.utils.KeyUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,8 +26,18 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
-
     private ProductInfoRepository repository;
+    @Override
+    public ProductInfo create(ProductDTO productDTO){
+        ProductInfo productInfo = new ProductInfo();
+        String productId = KeyUtil.genUniqueKey();
+        productDTO.setProductId(productId);
+        productDTO.setProductStatus(0);
+        BeanUtils.copyProperties(productDTO,productInfo);
+        repository.save(productInfo);
+        return productInfo;
+    }
+    
     @Override
     public ProductInfo findOne(String productId) {
         return repository.findById(productId).orElse(null);

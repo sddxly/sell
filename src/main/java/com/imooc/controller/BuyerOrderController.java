@@ -46,7 +46,9 @@ public class BuyerOrderController {
             throw new SellException(ResultEnum.PARAM_ERROR.getCode(),
                     bindingResult.getFieldError().getDefaultMessage());
         }
+        
         OrderDTO orderDTO = OrderForm2OrderDTOConverter.convert(orderForm);
+        
         if(CollectionUtils.isEmpty(orderDTO.getOrderDetailList())) {
             log.error("【创建订单】购物车不能为空");
             throw new SellException(ResultEnum.CART_EMPTY);

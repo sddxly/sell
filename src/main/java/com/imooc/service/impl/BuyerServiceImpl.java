@@ -22,7 +22,7 @@ public class BuyerServiceImpl implements BuyerService {
 
     @Override
     public OrderDTO findOrderOne(String openid, String orderId) {
-
+        
         return checkOrderOwner(openid,orderId);
     }
 
@@ -36,7 +36,7 @@ public class BuyerServiceImpl implements BuyerService {
         return orderService.cancel(orderDTO);
     }
 
-
+    
     private OrderDTO checkOrderOwner(String openid, String orderId){
         OrderDTO orderDTO = orderService.findOne(orderId);
         if(orderDTO==null){
