@@ -55,8 +55,7 @@ public class BuyerProductController {
             ProductVo productVo =new ProductVo();
             productVo.setCategoryType(productCategory.getCategoryType());
             productVo.setCategoryName(productCategory.getCategoryName());
-
-
+            
             List<ProductInfoVo> productInfoVoList = new ArrayList<>();
             for(ProductInfo productInfo: productInfoList){
                 if(productInfo.getCategoryType().equals(productCategory.getCategoryType())){
@@ -68,12 +67,7 @@ public class BuyerProductController {
             productVo.setProductInfoVoList(productInfoVoList);
             productVoList.add(productVo);
         }
-
-
-
-
-
+        
         return ResultVoUtil.success(productVoList);
-
     }
 }

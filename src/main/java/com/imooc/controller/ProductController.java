@@ -12,13 +12,12 @@ import com.imooc.utils.ResultVoUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,7 +35,7 @@ public class ProductController {
     @PostMapping("/create")
     public ResultVo<Map<String,String>> create(@RequestBody ProductInsertForm productInsertForm,
                                                BindingResult bindingResult){
-        System.out.println("收到请求");
+        
         if(bindingResult.hasErrors()){
             log.error("【创建商品】参数不正确，productInsertForm={}",productInsertForm);
             throw new SellException(ResultEnum.PARAM_ERROR.getCode(),
@@ -52,4 +51,5 @@ public class ProductController {
 
         return ResultVoUtil.success(map);
     }
+    
 }
