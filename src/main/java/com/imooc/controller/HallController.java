@@ -51,6 +51,40 @@ public class HallController {
         
     }
     
+    @GetMapping("/getallhalls")
+    public ResultVo<List<HallResponseVo>> getAllHalls(){
+        ResultVo<List<HallResponseVo>> resultVo = new ResultVo<>();
+        List<HallResponseVo> hallResponseVoList = new ArrayList<>();
+        try{
+            List<HallInfo> hallInfoList = hallService.findAll();
+            for(HallInfo  hallInfo : hallInfoList){
+                String icons[] = hallInfo.getHallIcon().split(",");
+                List<String> iconList = new ArrayList<>();
+                if(icons.length > 0){
+                    for(int i =0;i < icons.length;i++){
+                        iconList.add(icons[i]);
+                    }
+                }
+                HallResponseVo hallResponseVo = new HallResponseVo();
+                hallResponseVo.setId(hallInfo.getHallId());
+                hallResponseVo.setName(hallInfo.getHallName());
+                hallResponseVo.setIcon(iconList);
+                hallResponseVo.setLatitude(hallInfo.getHallLat());
+                hallResponseVo.setLongitude(hallInfo.getHallLng());
+                hallResponseVoList.add(hallResponseVo);
+            }
+            resultVo.setCode(0);
+            resultVo.setMsg("获取营业厅成功");
+            resultVo.setData(hallResponseVoList);
+            return resultVo;
+        }catch(Exception e){
+            resultVo.setCode(1);
+            resultVo.setMsg("获取营业厅失败");
+            log.info(e.getMessage(), e);
+            return resultVo;
+        }
+    }
+    
     @GetMapping("/gethallbyrange")
     public ResultVo<List<HallResponseVo>> getHallByRange(@RequestParam("latitude") Double latitude, @RequestParam("longitude") Double longitude) {
         ResultVo<List<HallResponseVo>> resultVo = new ResultVo<>();
