@@ -10,3 +10,8 @@ server:
   servlet:
     context-path: /sell
 
+qiniu:
+  accessKey: accessKey
+  secretKey: secretKey
+  bucket: bucket
+  cdnPrefix: cdn
